@@ -1,0 +1,46 @@
+# Decorator for formatting report
+def format_report(func):
+    def wrapper(self):
+        print("\n====================")
+        func(self)
+        print("====================")
+    return wrapper
+
+
+class Report:
+    company = "ABC College"
+
+    def __init__(self, title, content):
+        self.title = title
+        self.content = content
+
+    # Class Method
+    @classmethod
+    def change_company(cls, name):
+        cls.company = name
+
+    # Decorator
+    @format_report
+    def generate_report(self):
+        print("Company:", Report.company)
+        print("Report:", self.title)
+        print("Content:", self.content)
+
+    # Magic Method
+    def __str__(self):
+        return self.title
+
+
+# Main Program
+print("--- Dynamic Report Generator ---")
+
+name = input("Enter Company Name: ")
+title = input("Enter Report Title: ")
+content = input("Enter Report Content: ")
+
+Report.change_company(name)
+
+r = Report(title, content)
+
+print("\nReport Title:", r)
+r.generate_report()
